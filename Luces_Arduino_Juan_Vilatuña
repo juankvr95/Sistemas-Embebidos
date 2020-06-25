@@ -1,0 +1,132 @@
+/*
+ *                    UNIVERSIDAD TÉCNICA DEL NORTE
+ *                         SISTEMAS EMBEBIDOS
+ *                      JUAN CARLOS VILATUÑA ROMO
+ */
+
+const int vec[6]={7,8,9,10,11,12};
+
+const int p1=7;
+const int p2=8;
+const int p3=9;
+const int p4=10;
+const int p5=11;
+const int p6=12;
+const int btn = 4;
+const int btn1 = 3;
+
+int i=0;
+int j=0;
+int k=0;
+int e=0;
+int m=0;
+int n=0;
+int x=0;
+int y=0;
+
+
+void setup() {
+  
+  for(i=0;i<6;i++){
+    pinMode(vec[i],OUTPUT);
+  }
+ 
+   pinMode(btn,INPUT);
+   pinMode(btn1,INPUT);
+   pinMode(p1,OUTPUT);
+   pinMode(p2,OUTPUT);
+   pinMode(p3,OUTPUT);
+   pinMode(p4,OUTPUT);
+   pinMode(p5,OUTPUT);
+   pinMode(p6,OUTPUT);
+
+}
+
+void loop() {
+
+  /*
+   * Realice un programa que al presionar un pulsador, active un juego de 6 luces led que solo se enciendan
+   * Este juego se ejecutará 8 veces cada vez que se presione el pulsador. 
+   */ 
+
+  if(digitalRead(btn)== HIGH){
+    delay(200);
+    e=1-e;
+    if(e==1)
+      for(j=0;j<8;j++){
+      for(i=0;i<6;i++){
+        digitalWrite(vec[i],HIGH);
+        delay(150);
+        digitalWrite(vec[i],LOW);
+        delay(150);
+        }
+    }
+     else
+      for(k=0;k<8;k++){
+      for(i=0;i<6;i++){
+        digitalWrite(vec[i],HIGH);
+        delay(150);
+        digitalWrite(vec[i],LOW);
+        delay(150);
+        }
+       }
+     }
+    
+
+    /*
+     * Con otro pulsador, active un juego de 6 luces led que encienda  y apague  en grupos de dos en dos de la forma:1 y 6, 2 y 5 , 3 y 4
+     * Este juego se ejecutará 10 veces cada vez que se presione este pulsador.
+     */
+
+    if (digitalRead (btn1)==HIGH){
+    delay(300);
+    e=1-e;
+    if (e==1){
+      for(x=0;x<8;x++){
+        digitalWrite (p1,HIGH);
+        digitalWrite (p6,HIGH);
+        delay(200); 
+        digitalWrite (p1,LOW);
+        digitalWrite (p6,LOW);
+        delay (200);
+        digitalWrite (p2,HIGH);
+        digitalWrite (p5,HIGH);
+        delay(200); 
+        digitalWrite (p2,LOW);
+        digitalWrite (p5,LOW);
+        delay (200);
+        digitalWrite (p3,HIGH);
+        digitalWrite (p4,HIGH);
+        delay(200); 
+        digitalWrite (p3,LOW);
+        digitalWrite (p4,LOW);
+        delay (200);
+        }
+        
+       }else{
+        for(y=0;y<8;y++){
+          digitalWrite (p1,HIGH);
+          digitalWrite (p6,HIGH);
+          delay(300); 
+          digitalWrite (p1,LOW);
+          digitalWrite (p6,LOW);
+          delay (300);
+          digitalWrite (p2,HIGH);
+          digitalWrite (p5,HIGH);
+          delay(300); 
+          digitalWrite (p2,LOW);
+          digitalWrite (p5,LOW);
+          delay (300);
+          digitalWrite (p3,HIGH);
+          digitalWrite (p4,HIGH);
+          delay(300); 
+          digitalWrite (p3,LOW);
+          digitalWrite (p4,LOW);
+          delay (300);
+        }
+        
+       }
+      
+    }
+  
+  }
