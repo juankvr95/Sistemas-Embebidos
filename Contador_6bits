@@ -1,0 +1,35 @@
+
+/*
+ *      UNIVERSIDAD TÉCNICA DEL NORTE
+ *           SISTEMAS EMBEBIDOS
+ *        JUAN CARLOS VILATUÑA ROMO
+ *        
+ * REALIZAR UN CONTADOR BINARIO HASTA 6 BITS
+ */
+const int btn=7;
+int num=0;
+int e; int i; int j;
+
+
+void setup() {
+for(i=8;i<=13;i++){ // variables a utilizar las cuales estan asignadas desde el pin 8 al 13
+pinMode(i, OUTPUT);
+pinMode (btn,INPUT);
+  }
+}
+
+void loop() {
+if (digitalRead (btn)==HIGH){ 
+num++;
+if (num>64){
+  num=0;
+  }
+  while (digitalRead (btn)==HIGH){
+}
+  
+e=num;
+  for (j=8;j<=13;j++){  // el ciclo for nos permitirá la activación de los leds en secuencia
+  digitalWrite (j,e%2); 
+  e=e/2;
+    }
+  }
