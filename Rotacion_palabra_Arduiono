@@ -1,0 +1,39 @@
+/*
+ *               UNIVERSIDAD TÉCNICA DEL NORTE
+ *                          CITEL
+ *                   JUAN CARLOS VILATUÑA
+ *                    SISTEMAS EMBEBIDOS
+ *
+ *Realice la rotación de izquierda a derecha de la palabra "ARDUINO"
+ */ 
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(13,12,11,10,9,8);
+
+String txt = "ARDUINO";
+int longitud_texto = txt.length();
+
+void setup() {
+
+  lcd.begin(16,2);
+  lcd.setCursor(0,0);
+  lcd.print(txt);
+  delay(500);
+ 
+}
+
+void loop() {
+ for(int i=0;i<longitud_texto;i++){
+  lcd.scrollDisplayLeft();
+  delay(300);
+ }
+ for(int i=0;i<(16 + longitud_texto);i++){
+  lcd.scrollDisplayRight();
+  delay(300);
+ }
+ for(int i=0;i<16;i++){
+  lcd.scrollDisplayLeft();
+  delay(300);
+ }
+delay(500);
+ 
+}
