@@ -1,0 +1,303 @@
+/*
+ *        ///////////////LABORATORIO 2////////////////////
+ *        ///////MODULOS DE COMUNICACIÓN///////////////////
+ *        ///// JUAN CARLOS VILATUÑA ROMO///////////////////
+ *        
+ * ///////////////////////MATER///////////////////////////
+ * 
+ */
+ String dato; //variable recibe las voacales
+ int tam; // variable para almacenar el numero de vocales a codificar 
+ int i=0; // variable de vecto
+ String salida; //variable de mensaje de codificacion final
+ int j=0; // variable de confirmacion de recepcion de vocales  
+
+
+int r;
+int sum = 0;
+const int bot = 7;
+
+#include<Wire.h>  // libreria i2c 
+void setup() {
+
+  Wire.begin();   //inicia comunicacion i2c
+  Serial.begin(9600);  //inicia comunicacion serial
+}
+
+void loop() {
+  
+  //lcd.clear();
+
+ if(Serial.available()>0){
+    dato = Serial.readString(); // recibe cadenas de texto
+    //dato=Serial.readStringUntil(32,HEX)o tambien(*,/,#)
+    dato.toLowerCase(); //confirma que los mensajes se encuentren en minusculas 
+    tam=dato.length()+1; //conocer el tamaño del mensaje +1 se almacena el posible error al convertir la cadena de caracteres 
+    char vector [tam]; //creamos vector
+    dato.toCharArray(vector,tam); //vector lleno con los caracteres de la cadena 
+    //validar qie sean todos vocales 
+   
+    for(i=0;i<tam-1;i++){
+      if(vector[i]=='A'||vector[i]=='B'||vector[i]=='C'||vector[i]=='D'||vector[i]=='E'||vector[i]=='F'||vector[i]=='G'||vector[i]=='H'||vector[i]=='I'||vector[i]=='J'||vector[i]=='K'||vector[i]=='L'||vector[i]=='M'
+      ||vector[i]=='N'||vector[i]=='O'||vector[i]=='P'||vector[i]=='Q'||vector[i]=='R'||vector[i]=='S'||vector[i]=='T'||vector[i]=='U'||vector[i]=='V'||vector[i]=='W'||vector[i]=='X'||vector[i]=='Y'||vector[i]=='Z'
+      ||vector[i]=='a'||vector[i]=='b'||vector[i]=='c'||vector[i]=='d'||vector[i]=='e'||vector[i]=='f'||vector[i]=='g'||vector[i]=='h'||vector[i]=='i'||vector[i]=='j'||vector[i]=='k'||vector[i]=='l'||vector[i]=='m'
+      ||vector[i]=='n'||vector[i]=='o'||vector[i]=='p'||vector[i]=='q'||vector[i]=='r'||vector[i]=='s'||vector[i]=='t'||vector[i]=='u'||vector[i]=='v'||vector[i]=='w'||vector[i]=='x'||vector[i]=='y'||vector[i]=='z'
+      ||vector[i]==' '||vector[i]=='1'||vector[i]=='2'||vector[i]=='3'||vector[i]=='4'||vector[i]=='5'||vector[i]=='6'||vector[i]=='7'||vector[i]=='8'||vector[i]=='9')
+        Serial.print(' ');
+        else
+        j++;      
+    }
+        if(j>0){
+          Serial.println("Error.!");
+        }
+        else {
+          Serial.println("Enviado.!");
+          //codificar las vocales 
+          for(i=0;i<tam-1;i++){
+            switch(vector[i]){
+            
+              case 'A':
+                salida = salida+"01000001";
+              break;
+              case 'B':
+                salida = salida+"01000010";
+              break;
+              case 'C':
+                salida = salida+"01000011";
+              break;
+              case 'D':
+                salida = salida+"01000100";
+              break;
+              case 'E':
+                salida = salida+"01000101";
+              break;
+              case 'F':
+                salida = salida+"01000110";
+              break;
+              case 'G':
+                salida = salida+"01000111";
+              break;
+              case 'H':
+                salida = salida+"01001000";
+              break;
+              case 'I':
+                salida = salida+"01001001";
+              break;
+              case 'J':
+                salida = salida+"0100110";
+              break;
+              case 'K':
+                salida = salida+"01001011";
+              break;
+              case 'L':
+                salida = salida+"01001100";
+              break;
+              case 'M':
+                salida = salida+"01001101";
+              break;
+              case 'N':
+                salida = salida+"01001110";
+              break;
+              case 'O':
+                salida = salida+"01001111";
+              break;
+              case 'P':
+                salida = salida+"01010000";
+              break;
+              case 'Q':
+                salida = salida+"01010001";
+              break;
+              case 'R':
+                salida = salida+"01010010";
+              break;
+              case 'S':
+                salida = salida+"01010011";
+              break;
+              case 'T':
+                salida = salida+"01010100";
+              break;
+              case 'U':
+                salida = salida+"01010101";
+              break;
+              case 'V':
+                salida = salida+"01010110";
+              break;
+              case 'W':
+                salida = salida+"01010111";
+              break;
+              case 'X':
+                salida = salida+"01011000";
+              break;
+              case 'Y':
+                salida = salida+"01011001";
+              break;
+              case 'Z':
+                salida = salida+"01011010";
+              break;
+              case 'a':
+                salida = salida+"01100001";
+              break;
+              case 'b':
+                salida = salida+"01100010";
+              break;
+              case 'c':
+                salida = salida+"01100011";
+              break;
+              case 'd':
+                salida = salida+"01100100";
+              break;
+              case 'e':
+                salida = salida+"01100101";
+              break;
+              case 'f':
+                salida = salida+"01100110";
+              break;
+              case 'g':
+                salida = salida+"01100111";
+              break;
+              case 'h':
+                salida = salida+"01101000";
+              break;
+              case 'i':
+                salida = salida+"01101001";
+              break;
+              case 'j':
+                salida = salida+"01101010";
+              break;
+              case 'k':
+                salida = salida+"01101011";
+              break;
+              case 'l':
+                salida = salida+"01101100";
+              break;
+              case 'm':
+                salida = salida+"01101101";
+              break;
+              case 'n':
+                salida = salida+"01101110";
+              break;
+              case 'o':
+                salida = salida+"01101111";
+              break;
+              case 'p':
+                salida = salida+"01110000";
+              break;
+              case 'q':
+                salida = salida+"01110001";
+              break;
+              case 'r':
+                salida = salida+"01110010";
+              break;
+              case 's':
+                salida = salida+"01110011";
+              break;
+              case 't':
+                salida = salida+"01110100";
+              break;
+              case 'u':
+                salida = salida+"01110101";
+              break;
+              case 'v':
+                salida = salida+"01110110";
+              break;
+              case 'w':
+                salida = salida+"01110111";
+              break;
+              case 'x':
+                salida = salida+"01111000";
+              break;
+              case 'y':
+                salida = salida+"01111001";
+              break;
+              case 'z':
+                salida = salida+"01111010";
+              break;
+              case ' ':
+                salida = salida+"01011111";
+              break;
+              case '1':
+                salida = salida+"00110001";
+              break;
+              case '2':
+                salida = salida+"00110010";
+              break;
+              case '3':
+                salida = salida+"00110011";
+              break;
+              case '4':
+                salida = salida+"00110100";
+              break;
+              case '5':
+                salida = salida+"00110101";
+              break;
+              case '6':
+                salida = salida+"00110110";
+              break;
+              case '7':
+                salida = salida+"00110111";
+              break;
+              case '8':
+                salida = salida+"00111000";
+              break;
+              case '9':
+                salida = salida+"00111001";
+              break;
+     
+            }//end de switch
+          }//end for
+        }//end else
+        j=0;
+        Serial.print(salida);
+        Wire.beginTransmission(4);
+        Wire.write(salida.c_str());
+        Wire.endTransmission();
+    }//end serial.available
+
+ 
+  }
+    
+    
+
+ /*
+  * ///////////////////////// ESCLAVO ////////////////////////
+  */
+  
+#include <Wire.h>
+char dato;
+String mensaje;
+String exi;
+int j=0;
+void setup() {
+    Wire.begin(4); // id de esclavo
+    Wire.onReceive(receiveEvent); // evento de recepción
+    Serial.begin(9600);
+}
+
+void loop() {
+ 
+}
+
+void receiveEvent (int bytes){
+
+  mensaje=" ";
+  while(Wire.available()){
+    dato=Wire.read();
+    mensaje.concat(dato);
+    Serial.println(mensaje);
+  }
+
+  if( j>0){
+          Serial.println("Error.!");
+        }
+        else {
+          Serial.println(String("Recibido.!")+String(mensaje));
+
+            if(mensaje == "01000001"){
+              exi = exi+"A";
+            }else if (mensaje == "01000010"){
+              exi = exi+"B";
+            }
+        }
+        j=0;
+        Serial.print(exi);
+}
