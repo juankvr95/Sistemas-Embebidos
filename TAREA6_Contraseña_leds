@@ -1,0 +1,83 @@
+////////////////////////////UNIVERSIDAD TÉCNICA DEL NORTE///////////////////////////
+/////////////////////////////////SISTEMAS EMBEBIDOS///////////////////////////////
+/////////////////////////////////////TAREA N° 6//////////////////////////////////
+////////////////////////////JUAN CARLOS VILATUÑA ROMO///////////////////////////
+/*
+ * Realizar un programa donde el sistema máster tenga 4 switchs, al activarlos, 
+ * envíe un mensaje por comunicación i2c al esclavo y encienda un led por cada switch.
+ */
+/////////////////////////////////////MASTER///////////////////////////////////////
+
+#include <Wire.h>
+int i=0;
+String txt;
+String psw;
+int dim;
+
+void setup() {
+
+ Wire.begin();
+ Serial.begin(9600);
+
+}
+
+void loop() {
+
+  if(Serial.available()>0){
+    psw = Serial.readString();
+    Serial.println(" ");
+    psw.toLowerCase();
+    
+    if(psw == "1995"){
+      txt = "accepted";
+    }else{
+      txt = "incorrect";
+    }
+    Serial.println(String("Password :")+String(txt));
+    Wire.beginTransmission(9);
+    Wire.write(txt.c_str());
+    Wire.endTransmission();
+    
+  }
+}
+
+////////////////////////////////////ESCLAVO//////////////////////////////////
+
+#include <Wire.h>
+const int led1 = 7; //led verde (acceso coorecto)
+const int led2 = 8; //led rojo (acceso incorrecto)
+char psw ;
+
+
+String mss=" ";
+
+void setup() {
+  Wire.begin(9);
+  Wire.onReceive(receiveEvent);
+  Serial.begin(9600);
+  pinMode(led1,OUTPUT);
+  pinMode(led2,OUTPUT);
+  
+}
+
+void loop() {
+  
+}
+void receiveEvent(int bytes){
+   mss="";
+   while(Wire.available()){
+    psw = Wire.read();
+    mss.concat(psw);
+   }
+   
+   if(mss == "accepted"){
+    Serial.println("Binvenido.!");
+    digitalWrite(led1,HIGH);
+    digitalWrite(led2,LOW);
+   }else{
+    Serial.println("Intenete nuevamente :) .!");
+    digitalWrite(led1,LOW);
+    digitalWrite(led2,HIGH);
+    
+   }
+}
