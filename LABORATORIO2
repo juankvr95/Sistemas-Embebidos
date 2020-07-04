@@ -1,0 +1,165 @@
+/////////////////////////////////UNIVERSIDAD TÉCNICA DEL NORTE ///////////////////////////////
+//////////////////////////////SISTEMAS EMBEBIDOS - LABORATORIO N2/////////////////////////////
+///////////////////////////////////JUAN CARLOS VILATUÑA ROMO///////////////////////////////////
+
+/////////////////////////////////////////MASTER////////////////////////////////////////////////
+
+char dt1;
+#include<Wire.h>
+void setup() {
+  Wire.begin();
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  if(Serial.available()>0){
+    dt1 = Serial.read();
+    Serial.println(" ");
+    Wire.beginTransmission(8);
+    Wire.write(dt1);
+    Wire.endTransmission();
+    Serial.println(String("Dato ingresado: ")+String(dt1));
+  }
+  
+
+}
+
+/////////////////////////////////////////SISTEMAS EMBEBIDOS LABORATORIO N2////////////////////////////
+
+
+///////////////////////////////////////////////////ESCLAVO///////////////////////////////////////////
+
+String vector; //dato
+String dt1; //data
+String salida;
+char var;
+
+#include <Wire.h>
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(13,12,11,10,9,8);
+
+
+void setup() {
+
+  
+  Wire.begin(8);
+  Wire.onReceive(receiveEvent);
+  lcd.begin(16,2);
+  lcd.setCursor(0,0); 
+  Serial.begin(9600);
+
+}
+
+void loop() {
+
+  
+}
+
+void receiveEvent(int bytes){
+  
+  while(Wire.available()){
+    if(Serial.available()){
+      dt1 = Serial.readString();
+    }
+      var = Wire.read();
+      vector = vector+var;
+      salida = "";
+
+      for(int i=0;i<=vector.length();i++){
+        switch(vector[i]){
+          case 'A':
+                salida = salida+"._";
+              break;
+              case 'B':
+                salida = salida+"_...";
+              break;
+              case 'C':
+                salida = salida+"_._.";
+              break;
+              case 'D':
+                salida = salida+"_..";
+              break;
+              case 'E':
+                salida = salida+".";
+              break;
+              case 'F':
+                salida = salida+".._.";
+              break;
+              case 'G':
+                salida = salida+"_ _.";
+              break;
+              case 'H':
+                salida = salida+"_ _ _ _";
+              break;
+              case 'I':
+                salida = salida+"..";
+              break;
+              case 'J':
+                salida = salida+"._ _ _";
+              break;
+              case 'K':
+                salida = salida+"_._";
+              break;
+              case 'L':
+                salida = salida+"._..";
+              break;
+              case 'M':
+                salida = salida+"_ _";
+              break;
+              case 'N':
+                salida = salida+"_.";
+              break;
+              case 'O':
+                salida = salida+"_ _ _";
+              break;
+              case 'P':
+                salida = salida+"._ _ .";
+              break;
+              case 'Q':
+                salida = salida+"_ _._";
+              break;
+              case 'R':
+                salida = salida+"._.";
+              break;
+              case 'S':
+                salida = salida+"...";
+              break;
+              case 'T':
+                salida = salida+"_";
+              break;
+              case 'U':
+                salida = salida+".._";
+              break;
+              case 'V':
+                salida = salida+"..._";
+              break;
+              case 'W':
+                salida = salida+"._ _";
+              break;
+              case 'X':
+                salida = salida+"_.._";
+              break;
+              case 'Y':
+                salida = salida+"_._ _";
+              break;
+              case 'Z':
+                salida = salida+"_ _..";
+              break;
+              case ' ':
+                salida = salida+"-";
+              break;
+              default:
+              break;        
+        }
+      }
+      lcd.clear();
+      lcd.setCursor(0,0);
+      lcd.println(String("Mens :")+String(vector));
+      lcd.setCursor(1,1);
+      lcd.println(String("Cod :")+(salida));
+        
+  }
+ 
+}
