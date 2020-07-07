@@ -1,0 +1,63 @@
+////////////////////////////////UNIVERSIDAD TÉCNICA DEL NORTE//////////////////////////////
+////////////////////////////////////SISTEMAS EMBEBIDOS/////////////////////////////////////
+///////////////////////////////////////TAREA 8///////////////////////////////////////////
+
+/*
+ * NOMBRE: JUAN CARLOS VILATUÑA ROMO
+ * INDICACIONES: REALICE UN PROGRAMA DONDE SE INGRESE POR COMUNICACIÓN SERIAL LA VELOCIDAD MÁXIMA Y MÍNIMA DE UN MOTOR EN DC (NO SERVO). 
+ * DONDE SU VELOCIDAD ES CONTROLADA POR UN CONVERSOR ANÁLOGO DIGITAL.  ESTOS VALORES DEBEN OBSERVARSE EN UNA LCD.
+ */
+
+
+
+#include<LiquidCrystal.h>
+
+LiquidCrystal lcd (13,12,11,10,9,8);
+
+float voltaje;
+int dutty;
+int giro = 0;
+String dato;
+int conversor;
+
+
+void setup() {
+
+  lcd.begin(16,2); // inicializa la lcd
+  Serial.begin(9600); //comunicación serial
+  Serial.println("Digite un valor"); //Mensaje a mostrar en la lcd
+}
+
+void loop() {
+
+conversor = analogRead(0); //lectura del canal 
+
+voltaje=(conversor*5.0)/1023.0;// conversión a voltaje 
+  dutty=conversor/4; // cambio de escala para dutty cicle
+  analogWrite(6,dutty); // envío de valor a pin
+  lcd.setCursor(0,0); // selección de ubicación en LCD
+  lcd.print("VELOCIDAD MOTOR");  // Mensaje de indicaciones
+  lcd.setCursor(13,1); // selección de ubicación en LCD
+  lcd.print(dutty);  //impresion del valor de la velocidad 
+  delay(3000);   //tiempo para la siguiente lectura
+  lcd.clear(); //limpia la lcd
+
+if(Serial.available()>0){  //Recepción de datos
+  dato= Serial.readString(); //almacenamiento del dato ingresado en la variable
+  giro = dato.toInt();    // convierte a entero
+
+  if(giro<300){   //si cumple la condicion de velocidad
+  conversor = map(conversor, 0, 1023, 0, giro); //funcion de cambio de limite
+  analogWrite(6,giro); //envio al valor del pin
+  lcd.setCursor(0,0);  // ubicacion de la lcd
+  lcd.print("VELOCIDAD MOTOR"); //Mensaje de indicaciones
+  lcd.setCursor(13,1); //ubicacion de la lcd
+  lcd.print(giro);  // impresion del valor de la velocidad
+  delay(3000);  // tiempo para la siguiente lectura
+  lcd.clear();  //borra la lcd
+}else{
+  lcd.setCursor(0,0); // ubicacion de la lcd
+  lcd.print("Error de valor!"); //mensaje de indicación
+  delay(3000); // tiempo para la siguiente lectura
+  lcd.clear(); // limpia lcd 
+}}}
